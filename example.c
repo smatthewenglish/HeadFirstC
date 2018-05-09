@@ -15,5 +15,8 @@ int main()
     return 1;
   }
   printf("There are %i cards\n", (decks * 52));
+
+  printf("%s says the count in %i", "Ben", 21);
+
   return 0;
 }
