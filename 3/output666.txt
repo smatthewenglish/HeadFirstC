@@ -1,0 +1,2 @@
+data=[
+{latitude: 42.363998, longitude: -71.098465, info: 'Speed = 21'},
