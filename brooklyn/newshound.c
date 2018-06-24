@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/types.h>
 
 int main(int argc, char *argv[])
 {
@@ -16,9 +17,16 @@ int main(int argc, char *argv[])
 		sprintf(var, "RSS_FEED=%s", feeds[i]);
 		char *vars[] = {var, NULL};
 
-		if(execle("/usr/bin/python", "/usr/bin/python", "./dogriffiths-rssgossip-f0bb346/rssgossip.py", phrase, NULL, vars) == -1) {
-			fprintf(stderr, "Can't run script: %s\n", strerror(errno));
+		pid_t pid = fork();
+		if(pid == -1) {
+			fprintf(stderr, "Can't fork process: %s\n", strerror(errno));
 			return 1;
+		}
+		if(!pid) {
+			if(execle("/usr/bin/python", "/usr/bin/python", "./dogriffiths-rssgossip-f0bb346/rssgossip.py", phrase, NULL, vars) == -1) {
+				fprintf(stderr, "Can't run script: %s\n", strerror(errno));
+				return 1;
+			}
 		}
 	}
 	return 0;
