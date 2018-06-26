@@ -28,7 +28,9 @@ int main(int argc, char *argv[])
 	name.sin_port = (in_port_t)htons(30000);
 	name.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	bind(listener_d, (struct sockaddr *) &name, sizeof(name));	// Bind the socket to port 30000.
+	//bind(listener_d, (struct sockaddr *) &name, sizeof(name));	// Bind the socket to port 30000.
+	if (bind(listener_d, (struct sockaddr *) &name, sizeof(name)) == -1)
+		error("Can't bind the port");
 
 	listen(listener_d, 10); 	// Set the listen queue depth to 10.
 
